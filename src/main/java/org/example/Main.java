@@ -1,19 +1,27 @@
 package org.example;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.Scanner;
+
+//import static org.example.UserDataApplication.processUserData;
+
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        UserDataApplication userDataApplication = new UserDataApplication();
+        Scanner scanner = new Scanner(System.in);
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        try {
+            System.out.println("Введите данные (Фамилия , Имя , Отчество , датарождения , номер телефона , пол):");
+            String userData = scanner.nextLine();
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+            userDataApplication.processUserData(userData);
+            System.out.println("Данные успешно обработаны и записаны в файл.");
+        } catch (InvalidDataFormatException | FileOperationException e) {
+            System.err.println("Ошибка: " + e.getMessage());
+            if (e.getCause() != null) {
+                e.getCause().printStackTrace();
+            }
+        } finally {
+            scanner.close();
         }
     }
 }
